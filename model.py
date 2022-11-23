@@ -223,7 +223,7 @@ class BiLstmCrf(nn.Module):
         embeds = self.embedding(sentence)
         embeds = self.dropout(embeds)
         embeds = nn.utils.rnn.pack_padded_sequence(embeds, sentence_lengths, batch_first=True)
-        hidden = self.get_state()  # [m,b,e]
+        hidden = self.get_state(sentence)  # [m,b,e]
         lstm_out, self.hidden = self.lstm(embeds, hidden)
         # if sentence_lengths:
         lstm_out, _ = nn.utils.rnn.pad_packed_sequence(lstm_out, batch_first=True)
